@@ -1,6 +1,6 @@
 {
   "name": "electron-updater-example",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "main": "main.js",
   "description": "electron-updater example project",
   "author": "Matt Haggard",
@@ -17,6 +17,9 @@
     "electron-updater": "^4.3.5"
   },
   "build": {
-    "appId": "com.github.code-by-tim.electronupdaterexample"
+    "appId": "com.github.code-by-tim.electronupdaterexample",
+    "nsis": {
+      "oneClick": false
+    }
   }
 }
