@@ -5,6 +5,7 @@ const {app, BrowserWindow, Menu, protocol, ipcMain} = require('electron');
 const log = require('electron-log');
 const {autoUpdater} = require("electron-updater");
 
+var updateReadyForInstall = false;
 //-------------------------------------------------------------------
 // Logging
 //
@@ -23,25 +24,6 @@ log.info('App starting...');
 // THIS SECTION IS NOT REQUIRED
 //-------------------------------------------------------------------
 let template = []
-if (process.platform === 'darwin') {
-  // OS X
-  const name = app.getName();
-  template.unshift({
-    label: name,
-    submenu: [
-      {
-        label: 'About ' + name,
-        role: 'about'
-      },
-      {
-        label: 'Quit',
-        accelerator: 'Command+Q',
-        click() { app.quit(); }
-      },
-    ]
-  })
-}
-
 
 //-------------------------------------------------------------------
 // Open a window that displays the version
@@ -96,7 +78,12 @@ app.on('ready', function() {
   createDefaultWindow();
 });
 app.on('window-all-closed', () => {
-  app.quit();
+  console.log("Was here");
+  if(updateReadyForInstall){
+    autoUpdater.quitAndInstall();
+  } else {
+    app.quit();
+  }
 });
 
 //
@@ -113,6 +100,9 @@ app.on('ready', function()  {
   autoUpdater.checkForUpdatesAndNotify();
 });
 
+autoUpdater.on('update-downloaded', (info) => {
+  updateReadyForInstall = true;
+})
 //-------------------------------------------------------------------
 // Auto updates - Option 2 - More control
 //
@@ -137,6 +127,6 @@ app.on('ready', function()  {
 // })
 // autoUpdater.on('download-progress', (progressObj) => {
 // })
-// autoUpdater.on('update-downloaded', (info) => {
+//autoUpdater.on('update-downloaded', (info) => {
 //   autoUpdater.quitAndInstall();  
-// })
+//})
