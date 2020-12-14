@@ -23,7 +23,14 @@ log.info('App starting...');
 //
 // THIS SECTION IS NOT REQUIRED
 //-------------------------------------------------------------------
-let template = []
+let template = [
+  {
+    label: 'File',
+    submenu: [
+      { role: 'quit' },
+    ]
+  }
+]
 
 //-------------------------------------------------------------------
 // Open a window that displays the version
@@ -78,13 +85,19 @@ app.on('ready', function() {
   createDefaultWindow();
 });
 app.on('window-all-closed', () => {
-  console.log("Was here");
+  console.log("window-all-closed event was emmitted");
+  app.quit();
+});
+
+app.on('will-quit', (Event) => {
+  console.log("Will-quit event was emitted");
+  Event.preventDefault();
   if(updateReadyForInstall){
     autoUpdater.quitAndInstall();
   } else {
-    app.quit();
+    app.exit();
   }
-});
+})
 
 //
 // CHOOSE one of the following options for Auto updates
