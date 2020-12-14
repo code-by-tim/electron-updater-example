@@ -89,7 +89,18 @@ app.on('window-all-closed', () => {
   app.quit();
 });
 
-app.on('will-quit', (Event) => {
+app.once('quit', () => {
+  console.log("'quit' event was emmitted");
+  if(updateReadyForInstall){
+    autoUpdater.quitAndInstall();
+  }
+});
+
+//Bei jedem Quit Vorgang (außer wenn app.exit() gecalled wird) wird gecheckt, ob ein update gedownloaded wurde.
+//Wurde ein Updated gedownloaded, wird die app über autoUpdater.quitAndInstall() beendet, das Update wird dann installiert.
+// Sollte kein Update vorliegen, wird die app über app.exit() direkt geschlossen, ohne das events emmitted werden (Das ist
+// ja schon davor passiert)
+/*app.on('will-quit', (Event) => {
   console.log("Will-quit event was emitted");
   Event.preventDefault();
   if(updateReadyForInstall){
@@ -97,7 +108,7 @@ app.on('will-quit', (Event) => {
   } else {
     app.exit();
   }
-})
+});*/
 
 //
 // CHOOSE one of the following options for Auto updates
