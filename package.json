@@ -6,7 +6,7 @@
   "author": "Matt Haggard",
   "scripts": {
     "start": "electron .",
-    "release": "build -p"
+    "release": "build"
   },
   "devDependencies": {
     "electron": "^3.0.2",
