@@ -5,6 +5,7 @@
   "description": "electron-updater example project",
   "author": "Matt Haggard",
   "scripts": {
+    "start": "electron .",
     "publish": "build -p always"
   },
   "devDependencies": {
@@ -13,15 +14,13 @@
   },
   "dependencies": {
     "electron-log": "^1.3.0",
-    "electron-updater": "^4.0.6"
+    "electron-updater": "^4.3.5"
   },
   "build": {
-    "appId": "com.github.iffy.electronupdaterexample",
-    "mac": {
-      "category": "your.app.category.type",
+    "appId": "com.github.code-by-tim.electronupdaterexample",
+    "win": {
       "target": [
-        "zip",
-        "dmg"
+        "nsis"
       ]
     }
   }
